@@ -1,0 +1,15 @@
+{
+    "name": "mfilin/comments",
+    "autoload": {
+        "psr-4": {
+            "Mfilin\\Comments\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Максим Филин",
+            "email": "inet.soul@gmail.com"
+        }
+    ],
+    "require": {}
+}

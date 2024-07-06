@@ -11,18 +11,24 @@ class Comment extends DataBase
     public function save()
     {
         $stmt = $this->conn->prepare('INSERT INTO comments(`text`) VALUES(:text)');
-        $stmt->execute(array('user_id' => $this->userId, 'comment' => $this->comment));
+        $stmt->execute([
+            'text' => $this->text
+        ]);
         $this->id = $this->conn->lastInsertId();
         return $this->id;
     }
 
-    public function findAll()
+    public function getlist()
     {
         $stmt = $this->conn->prepare('SELECT * FROM comments ORDER BY id DESC');
         $stmt->execute();
         $comments = [];
         while ($row = $stmt->fetch(\PDO::FETCH_LAZY)) {
-            $comments[] = ['id' => $row->id, 'user_id' => $row->user_id, 'comment' => $row->comment, 'created_at' => $row->created_at];
+            $comments[] = [
+                'id' => $row->id, 
+                'text' => $row->text, 
+                'date_create' => $row->date_create
+            ];
         }
         return $comments;
     }

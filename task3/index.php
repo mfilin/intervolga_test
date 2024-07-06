@@ -1,14 +1,24 @@
 <?php
 require_once('config.php');
 use task3\Classes\Comment;
+use task3\Classes\DataBase;
+use task3\Classes\Validator;
 
 $comment = new Comment();
-if (!empty($_POST['comment'])) {
+if (!empty($_POST['text'])) {
     $comment->text = $_POST['text'];
     $comment->save();
 }
-$comments = $comment->findAll();
+$comments = $comment->getlist();
 
+$errors = [];
+if (!empty($_POST)) {
+    $validator = new Validator(new DataBase());
+    foreach ($_POST as $k => $v) {
+        $validator->checkEmpty($k, $v);
+    }
+    $errors = $validator->errors;   
+}
 ?>
 
     <!DOCTYPE html>
@@ -66,34 +76,32 @@ $comments = $comment->findAll();
 
         <h1>Список комментариев</h1>
 
-        <?php
+        <div style="color: red;">
+            <?php foreach ($errors as $error) :?>
+                <p><?php echo $error;?></p>
+            <?php endforeach; ?>
+        </div>
 
-        
+        <?php foreach ($comments as $row): ?>
 
-        foreach ($comments as $row) :
-        ?>
             <li class="comment-item">
                 <h3>Comment <?= $row['id'] ?></h3>
                 <p><?= $row['text'] ?></p>
             </li>
 
-        <?php endforeach
+        <?php endforeach ?>
 
-        ?>
-
-        <form class="comment-form" action="/add-comment" method="POST">
+        <form class="comment-form" action="/task3/" method="POST">
             <label for="comment">Комментарий:</label>
-            <textarea id="comment" name="comment" required></textarea>
-            <button type="submit">Добавить</button>
+            <textarea id="comment" name="text" required></textarea>
+            <br>
+            <button type="submit">Отправить</button>
         </form>
 
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
             $(function() {
-                $('.qdate').datepicker({
-                    dateFormat: "dd-mm-yy"
-                });
+                
             });
         </script>
     </body>

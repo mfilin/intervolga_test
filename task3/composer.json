@@ -1,8 +1,8 @@
 {
-    "name": "mfilin/comments",
+    "name": "task3/comments",
     "autoload": {
         "psr-4": {
-            "Mfilin\\Comments\\": "src/"
+            "task3\\Classes\\": "src/classes"
         }
     },
     "authors": [

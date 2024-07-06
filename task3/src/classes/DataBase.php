@@ -26,15 +26,4 @@ class DataBase
     {
         return $this->_error;
     }
-
-    public function getMaxLegth($table, $column)
-    {
-        $stmt = $this->conn->prepare('select COLUMN_NAME, CHARACTER_MAXIMUM_LENGTH 
-                                    from information_schema.columns
-                                    where table_schema = DATABASE() AND
-                                    table_name = :table AND COLUMN_NAME = :column');
-        $stmt->execute(array("table" => $table, "column" => $column));
-        $column = $stmt->fetch(\PDO::FETCH_LAZY);
-        return $column['CHARACTER_MAXIMUM_LENGTH'];
-    }
 }

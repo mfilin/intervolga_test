@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Mfilin\\Comments\\' => array($baseDir . '/src'),
+    'task3\\Classes\\' => array($baseDir . '/src/classes'),
 );
